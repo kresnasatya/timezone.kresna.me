@@ -2,7 +2,7 @@
 	import { onInterval } from './utils';
 	import { getTZName, getFullDate, getTime } from './timezone';
 	import Icon from './Icon.svelte';
-	export let timeZone;
+	let { timeZone } = $props();
 
 	/**
 	 * @param {string} timeZone
@@ -36,7 +36,7 @@
 		}
 	}
 
-	let currentTime = Date.now();
+	let currentTime = $state(Date.now());
 	onInterval(() => {
 		currentTime = Date.now();
 	}, 1000);
@@ -46,7 +46,7 @@
 	style="width: 100%; border: 1px solid gray;"
 	class="rounded-md timezone {getIconName(timeZone.tz) === 'sun' ? 'daytime' : 'nighttime'}"
 >
-	<p class="font-medium" style="font-size: 1.25rem; margin: 0; padding: 0;">
+	<p class="font-medium" style="font-size: 1.25rem; margin: 0; padding: 0; display: flex; gap: .5rem;">
 		<Icon name={getIconName(timeZone.tz)} time={getIconTime(timeZone.tz)} />
 		{timeZone.name}
 	</p>
@@ -65,11 +65,6 @@
 </div>
 
 <style>
-	/* Utility class */
-	.p-2 {
-		padding: 0.5rem;
-	}
-
 	.rounded-md {
 		border-radius: 0.375rem; /* 6px */
 	}

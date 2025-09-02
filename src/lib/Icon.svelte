@@ -7,13 +7,27 @@ const mapIcons = new Map();
 mapIcons.set('sun', SunIcon);
 mapIcons.set('moon', MoonIcon);
 
-export let name = 'sun';
-export let time = 'unknown';
-export let width = '24';
-export let height = '24';
-export let fill = 'none';
-export let stroke = 'currentColor';
-export let strokeWidth = '2';
+    /**
+     * @typedef {Object} Props
+     * @property {string} [name]
+     * @property {string} [time]
+     * @property {string} [width]
+     * @property {string} [height]
+     * @property {string} [fill]
+     * @property {string} [stroke]
+     * @property {string} [strokeWidth]
+     */
+
+    /** @type {Props} */
+    let {
+        name = 'sun',
+        time = 'unknown',
+        width = '24',
+        height = '24',
+        fill = $bindable('none'),
+        stroke = $bindable('currentColor'),
+        strokeWidth = '2'
+    } = $props();
 
 switch (time) {
     case 'morning':
@@ -35,14 +49,14 @@ switch (time) {
 }
 </script>
 
-<div role="img" aria-label="{time} time" style="display: inline; --width: {width}px; --height: {height}px; --stroke-width: {strokeWidth};
+<span role="img" aria-label="{time} time" style="display: inline; --width: {width}px; --height: {height}px; --stroke-width: {strokeWidth};
     --stroke: {stroke}; --fill: {fill};">
     {@html mapIcons.get(name)}
-</div>
+</span>
 
 <style>
     /* CSS modules */
-    div :global(svg) {
+    span :global(svg) {
         width: var(--width);
         height: var(--height);
         fill: var(--fill);
